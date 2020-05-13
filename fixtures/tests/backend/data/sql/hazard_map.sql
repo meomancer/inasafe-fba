@@ -9,7 +9,7 @@ INSERT INTO public.hazard_area (id, depth_class, geometry) VALUES (13757, 1, '01
 INSERT INTO public.hazard_area (id, depth_class, geometry) VALUES (13759, 2, '0106000020E610000001000000010300000001000000080000001C43B1077CA85A407BDF8814075D19C04967B4CD19A85A40D99CF4A2B06219C029877B775EA85A403E196D3D706A19C002AB9157B3A85A403197375ED96E19C0E116C1DDFAA85A407818447A1B6C19C0C0FAAA7B40A95A40F799EE84E36819C0E8D6949BEBA85A408A5E69DE0D5F19C01C43B1077CA85A407BDF8814075D19C0');
 
 -- hazard_areas
-INSERT INTO public.hazard_areas (id, flood_map_id, flooded_area_id) VALUES (11182, 85, 13756);
-INSERT INTO public.hazard_areas (id, flood_map_id, flooded_area_id) VALUES (11183, 85, 13758);
-INSERT INTO public.hazard_areas (id, flood_map_id, flooded_area_id) VALUES (11184, 85, 13757);
-INSERT INTO public.hazard_areas (id, flood_map_id, flooded_area_id) VALUES (11185, 85, 13759);
+INSERT INTO public.hazard_areas (id, hazard_map_id, hazarded_area_id) VALUES (11182, 85, 13756);
+INSERT INTO public.hazard_areas (id, hazard_map_id, hazarded_area_id) VALUES (11183, 85, 13758);
+INSERT INTO public.hazard_areas (id, hazard_map_id, hazarded_area_id) VALUES (11184, 85, 13757);
+INSERT INTO public.hazard_areas (id, hazard_map_id, hazarded_area_id) VALUES (11185, 85, 13759);

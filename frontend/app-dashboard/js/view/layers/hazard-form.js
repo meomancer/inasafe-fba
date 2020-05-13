@@ -3,11 +3,11 @@ define([
     'leaflet',
     'jquery',
     'wellknown',
-    'js/model/flood.js',
+    'js/model/hazard.js',
     'js/model/forecast_event.js'],
-    function (Backbone, L, $, Wellknown, FloodModel, ForecastEvent) {
+    function (Backbone, L, $, Wellknown, HazardModel, ForecastEvent) {
     return Backbone.View.extend({
-        el: '#draw-flood-form',
+        el: '#draw-hazard-form',
         post_data: {},
         initialize: function (polygon) {
             this.create_data(polygon)
@@ -22,11 +22,11 @@ define([
         create_data: function (polygon) {
             const that = this;
 
-            // make flood model map
+            // make hazard model map
             const place_name = this.$place_name.val();
             const source = 'User';
             const event_notes = this.$event_notes.val();
-            const flood_model_notes = 'User defined polygon';
+            const hazard_model_notes = 'User defined polygon';
             const source_url = '-';
             const return_period = this.$return_period.val();
             // parse from WKT to geojson
@@ -41,7 +41,7 @@ define([
             }
             let geojson = {
                 type: 'FeatureCollection',
-                name: 'flood_classes',
+                name: 'hazard_classes',
                 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
                 features: [
                     feature
@@ -59,17 +59,17 @@ define([
             const forecast_event = new ForecastEvent(forecast_event_attr);
             this.forecast_event = forecast_event;
 
-            FloodModel.uploadFloodMap({
+            HazardModel.uploadHazardMap({
                 geojson: geojson,
                 place_name: place_name,
                 return_period: return_period,
-                flood_model_notes: flood_model_notes})
-                .then(function(flood){
-                    that.flood = flood;
+                hazard_model_notes: hazard_model_notes})
+                .then(function(hazard){
+                    that.hazard = hazard;
 
                     // attach handler
-                    that.flood.on('upload-finished', that.uploadFloodFinished, that);
-                    that.flood.on('feature-uploaded', that.updateProgress, that);
+                    that.hazard.on('upload-finished', that.uploadHazardFinished, that);
+                    that.hazard.on('feature-uploaded', that.updateProgress, that);
                     that.setProgressBar(0);
 
                 }).catch(function (error) {

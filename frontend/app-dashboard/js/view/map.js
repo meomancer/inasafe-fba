@@ -21,14 +21,14 @@ define([
             LAYER: 'kartoza:exposed_buildings',
             LEGEND_OPTIONS: 'fontName:Ubuntu;fontSize:12;fontAntiAliasing:true;forceLabels:on'
         })}`,
-        wmsFloodDepthLegendURI: `${geoserverUrl}?${$.param({
+        wmsHazardDepthLegendURI: `${geoserverUrl}?${$.param({
             SERVICE: 'WMS',
             REQUEST: 'GetLegendGraphic',
             VERSION: '1.0.0',
             FORMAT: 'image/png',
             WIDTH: 20,
             HEIGHT: 20,
-            LAYER: 'kartoza:flood_forecast_layer',
+            LAYER: 'kartoza:hazard_forecast_layer',
             LEGEND_OPTIONS: 'fontName:Ubuntu;fontSize:12;fontAntiAliasing:true;forceLabels:on'
         })}`,
         wmsExposedRoadsLegendURI: `${geoserverUrl}?${$.param({
@@ -100,7 +100,7 @@ define([
             this.map.setZoom(5);
         },
         hideMap: function () {
-            dispatcher.trigger('flood:deselect-forecast');
+            dispatcher.trigger('hazard:deselect-forecast');
             $(this.map._container).hide();
         },
         drawForecastLayer: function(forecast, callback){
@@ -115,16 +115,16 @@ define([
                         that.removeOverlayLayer(that.forecast_layer);
                     }
                     that.redraw();
-                    that.addOverlayLayer(forecast_layer, 'Flood Forecast');
+                    that.addOverlayLayer(forecast_layer, 'hazard Forecast');
                     // zoom to bbox
                     that.map.flyToBounds(extent.leaflet_bounds);
                     // register layer to view
                     that.forecast_layer = forecast_layer;
-                    // reset region boundary and exposed flood maps because we are seeing different flood
+                    // reset region boundary and exposed hazard maps because we are seeing different hazard
                     that.showExposedRoads(null, null, null);
                     that.showRegionBoundary(null, null);
                     that.showExposedBuildings(null, null, null);
-                    that.wmsFloodLegend = L.wmsLegend(that.wmsFloodDepthLegendURI, that.map, 'wms-legend-icon fa fa-map-signs', 'bottomleft');
+                    that.wmsHazardLegend = L.wmsLegend(that.wmsHazardDepthLegendURI, that.map, 'wms-legend-icon fa fa-map-signs', 'bottomleft');
                     that.addLegendControl();
                     if(callback) {
                         callback();
@@ -146,8 +146,8 @@ define([
             if(this.wmsLegend) {
                 this.map.removeControl(this.wmsLegend)
             }
-            if(this.wmsFloodLegend){
-                this.map.removeControl(this.wmsFloodLegend)
+            if(this.wmsHazardLegend){
+                this.map.removeControl(this.wmsHazardLegend)
             }
             if(this.wmsExposedRoadsLegend){
                 this.map.removeControl(this.wmsExposedRoadsLegend)
@@ -175,7 +175,7 @@ define([
                 }
             });
             
-            $('#draw-flood').click(function () {
+            $('#draw-hazard').click(function () {
                 if ($(this).hasClass('enable')) {
                     that.map.removeControl(that.drawControl);
                     $(this).removeClass('enable');
@@ -190,7 +190,7 @@ define([
             this.map.on('draw:created', (e) => {
                 that.drawGroup.clearLayers();
                 that.drawGroup.addLayer(e.layer);
-                let $drawFormWrapper = $('#draw-flood-form').parent();
+                let $drawFormWrapper = $('#draw-hazard-form').parent();
                 let $drawFormParent = $drawFormWrapper.parent();
                 $drawFormParent.prev().hide();
                 $drawFormWrapper.show();
@@ -198,14 +198,14 @@ define([
 
                 $('#cancel-draw').click(function () {
                     that.drawGroup.removeLayer(e.layer);
-                    $('#draw-flood').removeClass('enable');
+                    $('#draw-hazard').removeClass('enable');
                     that.map.removeControl(that.drawControl);
                 });
 
                 $("#draw-form").submit(function(e){
                     e.preventDefault();
                     dispatcher.trigger('map:update-polygon', that.postgrestFilter());
-                    $('#draw-flood').removeClass('enable');
+                    $('#draw-hazard').removeClass('enable');
                     that.map.removeControl(that.drawControl);
                     $drawFormWrapper.hide();
                     $drawFormParent.hide("slide", { direction: "right" }, 200);
@@ -243,15 +243,15 @@ define([
             if (!this.layers) {
                 return null;
             }
-            let flood_id = null;
+            let hazard_id = null;
             try {
-                flood_id = floodCollectionView.displayed_flood.id;
+                hazard_id = hazardCollectionView.displayed_hazard.id;
             }catch (err){
 
             }
 
-            if (flood_id !== null) {
-                return "flood_id=" + flood_id;
+            if (hazard_id !== null) {
+                return "hazard_id=" + hazard_id;
             } else {
                 return null
             }
@@ -340,7 +340,7 @@ define([
                         transparent: true,
                         srs: 'EPSG:4326',
                         tiled: true,
-                        cql_filter: `flood_event_id=${forecast_id} AND ${id_key[region]}=${region_id} AND depth_class=${depth_class.id}`,
+                        cql_filter: `hazard_event_id=${forecast_id} AND ${id_key[region]}=${region_id} AND depth_class=${depth_class.id}`,
                     }
                 );
                 exposed_layer.setZIndex(10 + depth_class.id);
@@ -352,7 +352,7 @@ define([
             this.exposed_layers.forEach(l => that.addOverlayLayer(l.layer, l.name));
             this.wmsExposedRoadsLegend = L.wmsLegend(this.wmsExposedRoadsLegendURI, this.map, 'wms-legend-icon fa fa-road', 'bottomright');
             this.wmsLegend = L.wmsLegend(this.wmsLegendURI, this.map, 'wms-legend-icon fa fa-binoculars', 'bottomleft');
-            this.wmsFloodLegend = L.wmsLegend(this.wmsFloodDepthLegendURI, this.map, 'wms-legend-icon fa fa-map-signs', 'bottomleft');
+            this.wmsHazardLegend = L.wmsLegend(this.wmsHazardDepthLegendURI, this.map, 'wms-legend-icon fa fa-map-signs', 'bottomleft');
             this.addLegendControl();
         },
         showExposedRoads: function (forecast_id, region, region_id) {
@@ -381,7 +381,7 @@ define([
                     transparent: true,
                     srs: 'EPSG:4326',
                     tiled: true,
-                    cql_filter: `flood_event_id=${forecast_id} AND ${id_key[region]}=${region_id}`,
+                    cql_filter: `hazard_event_id=${forecast_id} AND ${id_key[region]}=${region_id}`,
                 }
             );
             this.exposed_road_layer.setZIndex(3);
@@ -437,8 +437,8 @@ define([
                         if(that.wmsLegend) {
                             that.map.removeControl(that.wmsLegend)
                         }
-                        if(that.wmsFloodLegend){
-                            that.map.removeControl(that.wmsFloodLegend)
+                        if(that.wmsHazardLegend){
+                            that.map.removeControl(that.wmsHazardLegend)
                         }
                         if(that.wmsExposedRoadsLegend){
                             that.map.removeControl(that.wmsExposedRoadsLegend)
@@ -448,8 +448,8 @@ define([
                         if(that.wmsLegend) {
                             that.map.addControl(that.wmsLegend)
                         }
-                        if(that.wmsFloodLegend){
-                            that.map.addControl(that.wmsFloodLegend)
+                        if(that.wmsHazardLegend){
+                            that.map.addControl(that.wmsHazardLegend)
                         }
                         if(that.wmsExposedRoadsLegend){
                             that.map.addControl(that.wmsExposedRoadsLegend)
