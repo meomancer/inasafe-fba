@@ -4,10 +4,9 @@
 
 CREATE TABLE IF NOT EXISTS public.hazard_class (
     id integer NOT NULL,
-    min_m double precision,
-    max_m double precision,
     label character varying(255),
-    CONSTRAINT depth_class_pkey PRIMARY KEY (id)
+    CONSTRAINT hazard_class_pkey PRIMARY KEY (id),
+    hazard_type INTEGER REFERENCES hazard_type(id)
 );
 
 --
@@ -28,8 +27,6 @@ CREATE SEQUENCE IF NOT EXISTS public.depth_class_id_seq
 --
 
 ALTER SEQUENCE public.depth_class_id_seq OWNED BY public.hazard_class.id;
-
-
 
 --
 -- Name: hazard_class id; Type: DEFAULT; Schema: public; Owner: -
