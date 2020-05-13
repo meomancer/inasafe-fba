@@ -25,6 +25,7 @@ define([
             this.$return_period = $form.find("select[name='return_period']");
             this.$acquisition_date = $form.find("input[name='acquisition_date']");
             this.$forecast_date = $form.find("input[name='forecast_date']");
+            this.$hazard_type = $form.find("select[name='hazard_type']");
         },
 
         submitForm: function(e){
@@ -43,6 +44,7 @@ define([
             const return_period = this.$return_period.val();
             const acquisition_date = moment.fromAirDateTimePicker(this.$acquisition_date.val()).format();
             const forecast_date = moment.fromAirDateTimePicker(this.$forecast_date.val()).format();
+            const hazard_type = this.$hazard_type.val();
 
 
             const forecast_event_attr = {
@@ -50,6 +52,7 @@ define([
                 link: source_url,
                 notes: event_notes,
                 acquisition_date: acquisition_date,
+                hazard_type_id: hazard_type,
                 forecast_date: forecast_date
             };
 
@@ -99,7 +102,6 @@ define([
                 }, options)
                 .then(function (response, textStatus) {
                     if(response){
-                        console.log(response)
                         // parser error but successfully sent to server
                         alert('hazard map successfully uploaded! It might take a while until the process finished.');
                         that.$el.find('[type=submit]').show();

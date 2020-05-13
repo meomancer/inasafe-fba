@@ -111,7 +111,7 @@ define([
 
             let ctxPrimaryExposure = $parentWrapper.find('.summary-chart-primary').get(0).getContext('2d');
             let datasetsPrimaryExposure = {
-                labels: ["Not Hazarded", "Hazarded"],
+                labels: ["Not Affected", "Affected"],
                 datasets: [{
                     data: [primary_exposure_data - primary_exposure_hazard_data, primary_exposure_hazard_data],
                     backgroundColor: ['#e5e5e5', '#82B7CA']
@@ -122,10 +122,10 @@ define([
                 labels: humanLabel,
                 datasets: [
                     {
-                        label: "Not Hazarded",
+                        label: "Not Affected",
                         data: graph_data
                     }, {
-                        label: "Hazarded",
+                        label: "Affected",
                         data: hazard_graph_data,
                         backgroundColor: backgroundColours
                     }]

@@ -75,9 +75,12 @@ require([
     'js/view/map.js',
     'js/request.js',
     'js/view/hazard-collection.js',
-], function ($, bootstrap, Backbone, _, moment, L, LDraw, AirDatepicker, AirDatepickerEN,  utils, MAP, RequestView, HazardCollectionView) {
+    'js/view/hazard-type-input.js',
+], function ($, bootstrap, Backbone, _, moment, L, LDraw, AirDatepicker, AirDatepickerEN,  utils, MAP, RequestView, HazardCollectionView, HazardTypeInput) {
     AppRequest = new RequestView();
     dispatcher = _.extend({}, Backbone.Events);
     mapView = new MAP();
     hazardCollectionView = new HazardCollectionView();
+    new HazardTypeInput($('#upload-hazard-form'));
+    new HazardTypeInput($('#draw-hazard-form'));
 });
