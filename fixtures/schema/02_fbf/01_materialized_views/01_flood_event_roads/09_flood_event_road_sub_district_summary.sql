@@ -14,52 +14,52 @@ CREATE MATERIALIZED VIEW public.mv_hazard_event_road_sub_district_summary AS
             sum(b_1.primary_road_count) AS primary_road_count,
             sum(b_1.motorway_link_road_count) AS motorway_link_road_count,
             sum(b_1.residential_road_count) AS residential_road_count
-           FROM ( SELECT DISTINCT mv_non_hazarded_roads_summary.district_id,
-                    mv_non_hazarded_roads_summary.sub_district_id,
-                    mv_non_hazarded_roads_summary.village_id,
-                    mv_non_hazarded_roads_summary.road_type_count,
+           FROM ( SELECT DISTINCT mv_roads_summary.district_id,
+                    mv_roads_summary.sub_district_id,
+                    mv_roads_summary.village_id,
+                    mv_roads_summary.road_type_count,
                         CASE
-                            WHEN ((mv_non_hazarded_roads_summary.road_type)::text = 'Motorway or highway'::text) THEN mv_non_hazarded_roads_summary.road_type_count
+                            WHEN ((mv_roads_summary.road_type)::text = 'Motorway or highway'::text) THEN mv_roads_summary.road_type_count
                             ELSE (0)::bigint
                         END AS motorway_highway_road_count,
                         CASE
-                            WHEN ((mv_non_hazarded_roads_summary.road_type)::text = 'Tertiary link'::text) THEN mv_non_hazarded_roads_summary.road_type_count
+                            WHEN ((mv_roads_summary.road_type)::text = 'Tertiary link'::text) THEN mv_roads_summary.road_type_count
                             ELSE (0)::bigint
                         END AS tertiary_link_road_count,
                         CASE
-                            WHEN ((mv_non_hazarded_roads_summary.road_type)::text = 'Secondary'::text) THEN mv_non_hazarded_roads_summary.road_type_count
+                            WHEN ((mv_roads_summary.road_type)::text = 'Secondary'::text) THEN mv_roads_summary.road_type_count
                             ELSE (0)::bigint
                         END AS secondary_road_count,
                         CASE
-                            WHEN ((mv_non_hazarded_roads_summary.road_type)::text = 'Secondary link'::text) THEN mv_non_hazarded_roads_summary.road_type_count
+                            WHEN ((mv_roads_summary.road_type)::text = 'Secondary link'::text) THEN mv_roads_summary.road_type_count
                             ELSE (0)::bigint
                         END AS secondary_link_road_count,
                         CASE
-                            WHEN ((mv_non_hazarded_roads_summary.road_type)::text = 'Tertiary'::text) THEN mv_non_hazarded_roads_summary.road_type_count
+                            WHEN ((mv_roads_summary.road_type)::text = 'Tertiary'::text) THEN mv_roads_summary.road_type_count
                             ELSE (0)::bigint
                         END AS tertiary_road_count,
                         CASE
-                            WHEN ((mv_non_hazarded_roads_summary.road_type)::text = 'Primary link'::text) THEN mv_non_hazarded_roads_summary.road_type_count
+                            WHEN ((mv_roads_summary.road_type)::text = 'Primary link'::text) THEN mv_roads_summary.road_type_count
                             ELSE (0)::bigint
                         END AS primary_link_road_count,
                         CASE
-                            WHEN ((mv_non_hazarded_roads_summary.road_type)::text = 'Track'::text) THEN mv_non_hazarded_roads_summary.road_type_count
+                            WHEN ((mv_roads_summary.road_type)::text = 'Track'::text) THEN mv_roads_summary.road_type_count
                             ELSE (0)::bigint
                         END AS track_road_count,
                         CASE
-                            WHEN ((mv_non_hazarded_roads_summary.road_type)::text = 'Primary road'::text) THEN mv_non_hazarded_roads_summary.road_type_count
+                            WHEN ((mv_roads_summary.road_type)::text = 'Primary road'::text) THEN mv_roads_summary.road_type_count
                             ELSE (0)::bigint
                         END AS primary_road_count,
                         CASE
-                            WHEN ((mv_non_hazarded_roads_summary.road_type)::text = 'Motorway link'::text) THEN mv_non_hazarded_roads_summary.road_type_count
+                            WHEN ((mv_roads_summary.road_type)::text = 'Motorway link'::text) THEN mv_roads_summary.road_type_count
                             ELSE (0)::bigint
                         END AS motorway_link_road_count,
                         CASE
-                            WHEN ((mv_non_hazarded_roads_summary.road_type)::text = 'Road, residential, living street, etc.'::text) THEN mv_non_hazarded_roads_summary.road_type_count
+                            WHEN ((mv_roads_summary.road_type)::text = 'Road, residential, living street, etc.'::text) THEN mv_roads_summary.road_type_count
                             ELSE (0)::bigint
                         END AS residential_road_count
-                   FROM public.mv_non_hazarded_roads_summary
-                  WHERE ((mv_non_hazarded_roads_summary.district_id IS NOT NULL) AND (mv_non_hazarded_roads_summary.sub_district_id IS NOT NULL) AND (mv_non_hazarded_roads_summary.village_id IS NOT NULL))) b_1
+                   FROM public.mv_roads_summary
+                  WHERE ((mv_roads_summary.district_id IS NOT NULL) AND (mv_roads_summary.sub_district_id IS NOT NULL) AND (mv_roads_summary.village_id IS NOT NULL))) b_1
           GROUP BY b_1.district_id, b_1.sub_district_id
         ), hazarded_count_selection AS (
          SELECT a.hazard_event_id,

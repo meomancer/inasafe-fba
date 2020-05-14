@@ -18,52 +18,52 @@ CREATE MATERIALIZED VIEW public.mv_hazard_event_village_summary AS
             sum(b_1.police_station_building_count) AS police_station_building_count,
             sum(b_1.supermarket_building_count) AS supermarket_building_count,
             sum(b_1.sports_facility_building_count) AS sports_facility_building_count
-           FROM ( SELECT DISTINCT mv_non_hazarded_building_summary.district_id,
-                    mv_non_hazarded_building_summary.sub_district_id,
-                    mv_non_hazarded_building_summary.village_id,
-                    mv_non_hazarded_building_summary.building_type_count,
+           FROM ( SELECT DISTINCT mv_building_summary.district_id,
+                    mv_building_summary.sub_district_id,
+                    mv_building_summary.village_id,
+                    mv_building_summary.building_type_count,
                         CASE
-                            WHEN ((mv_non_hazarded_building_summary.building_type)::text = 'Residential'::text) THEN mv_non_hazarded_building_summary.building_type_count
+                            WHEN ((mv_building_summary.building_type)::text = 'Residential'::text) THEN mv_building_summary.building_type_count
                             ELSE (0)::bigint
                         END AS residential_building_count,
                         CASE
-                            WHEN ((mv_non_hazarded_building_summary.building_type)::text = 'Clinic/Doctor'::text) THEN mv_non_hazarded_building_summary.building_type_count
+                            WHEN ((mv_building_summary.building_type)::text = 'Clinic/Doctor'::text) THEN mv_building_summary.building_type_count
                             ELSE (0)::bigint
                         END AS clinic_dr_building_count,
                         CASE
-                            WHEN ((mv_non_hazarded_building_summary.building_type)::text = 'Fire Station'::text) THEN mv_non_hazarded_building_summary.building_type_count
+                            WHEN ((mv_building_summary.building_type)::text = 'Fire Station'::text) THEN mv_building_summary.building_type_count
                             ELSE (0)::bigint
                         END AS fire_station_building_count,
                         CASE
-                            WHEN ((mv_non_hazarded_building_summary.building_type)::text = 'School'::text) THEN mv_non_hazarded_building_summary.building_type_count
+                            WHEN ((mv_building_summary.building_type)::text = 'School'::text) THEN mv_building_summary.building_type_count
                             ELSE (0)::bigint
                         END AS school_building_count,
                         CASE
-                            WHEN ((mv_non_hazarded_building_summary.building_type)::text = 'University/College'::text) THEN mv_non_hazarded_building_summary.building_type_count
+                            WHEN ((mv_building_summary.building_type)::text = 'University/College'::text) THEN mv_building_summary.building_type_count
                             ELSE (0)::bigint
                         END AS university_building_count,
                         CASE
-                            WHEN ((mv_non_hazarded_building_summary.building_type)::text = 'Government'::text) THEN mv_non_hazarded_building_summary.building_type_count
+                            WHEN ((mv_building_summary.building_type)::text = 'Government'::text) THEN mv_building_summary.building_type_count
                             ELSE (0)::bigint
                         END AS government_building_count,
                         CASE
-                            WHEN ((mv_non_hazarded_building_summary.building_type)::text = 'Hospital'::text) THEN mv_non_hazarded_building_summary.building_type_count
+                            WHEN ((mv_building_summary.building_type)::text = 'Hospital'::text) THEN mv_building_summary.building_type_count
                             ELSE (0)::bigint
                         END AS hospital_building_count,
                         CASE
-                            WHEN ((mv_non_hazarded_building_summary.building_type)::text = 'Police Station'::text) THEN mv_non_hazarded_building_summary.building_type_count
+                            WHEN ((mv_building_summary.building_type)::text = 'Police Station'::text) THEN mv_building_summary.building_type_count
                             ELSE (0)::bigint
                         END AS police_station_building_count,
                         CASE
-                            WHEN ((mv_non_hazarded_building_summary.building_type)::text = 'Supermarket'::text) THEN mv_non_hazarded_building_summary.building_type_count
+                            WHEN ((mv_building_summary.building_type)::text = 'Supermarket'::text) THEN mv_building_summary.building_type_count
                             ELSE (0)::bigint
                         END AS supermarket_building_count,
                         CASE
-                            WHEN ((mv_non_hazarded_building_summary.building_type)::text = 'Sports Facility'::text) THEN mv_non_hazarded_building_summary.building_type_count
+                            WHEN ((mv_building_summary.building_type)::text = 'Sports Facility'::text) THEN mv_building_summary.building_type_count
                             ELSE (0)::bigint
                         END AS sports_facility_building_count
-                   FROM public.mv_non_hazarded_building_summary
-                  WHERE ((mv_non_hazarded_building_summary.district_id IS NOT NULL) AND (mv_non_hazarded_building_summary.sub_district_id IS NOT NULL) AND (mv_non_hazarded_building_summary.village_id IS NOT NULL))) b_1
+                   FROM public.mv_building_summary
+                  WHERE ((mv_building_summary.district_id IS NOT NULL) AND (mv_building_summary.sub_district_id IS NOT NULL) AND (mv_building_summary.village_id IS NOT NULL))) b_1
           GROUP BY b_1.district_id, b_1.sub_district_id, b_1.village_id
         ), hazarded_count_selection AS (
          SELECT a.hazard_event_id,
