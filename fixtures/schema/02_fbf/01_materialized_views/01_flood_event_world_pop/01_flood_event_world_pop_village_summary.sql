@@ -16,8 +16,8 @@ from (
         village_code,
         sum(pop_sum) as pop_sum
     from mv_hazard_event_world_pop
-        where depth_class > 2
-    group by hazard_event_id, dc_code, sub_dc_code, village_code, depth_class) a
+        where hazard_class > 2
+    group by hazard_event_id, dc_code, sub_dc_code, village_code, hazard_class) a
     join village b on a.village_code = b.village_code
 group by hazard_event_id, a.dc_code, a.sub_dc_code, a.village_code, b.name)
     select

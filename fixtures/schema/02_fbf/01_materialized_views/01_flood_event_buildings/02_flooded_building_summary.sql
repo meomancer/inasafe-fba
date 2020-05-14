@@ -20,7 +20,7 @@ CREATE MATERIALIZED VIEW public.mv_hazarded_building_summary AS
             mv_hazard_event_buildings.building_id,
             mv_hazard_event_buildings.building_type,
             mv_hazard_event_buildings.total_vulnerability,
-            max(mv_hazard_event_buildings.depth_class) AS depth_class
+            max(mv_hazard_event_buildings.hazard_class) AS hazard_class
            FROM public.mv_hazard_event_buildings
           GROUP BY mv_hazard_event_buildings.hazard_event_id, mv_hazard_event_buildings.district_id, mv_hazard_event_buildings.sub_district_id, mv_hazard_event_buildings.village_id, mv_hazard_event_buildings.building_id, mv_hazard_event_buildings.building_type, mv_hazard_event_buildings.total_vulnerability) a
   WITH NO DATA;

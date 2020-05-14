@@ -6,7 +6,7 @@ CREATE MATERIALIZED VIEW public.mv_hazard_event_roads AS
  WITH intersections AS (
          SELECT a_1.geometry,
             d.id AS hazard_event_id,
-            a_1.depth_class
+            a_1.hazard_class
            FROM (((public.hazard_area a_1
              JOIN public.hazard_areas b_1 ON ((a_1.id = b_1.hazarded_area_id)))
              JOIN public.hazard_map c ON ((c.id = b_1.hazard_map_id)))
@@ -15,7 +15,7 @@ CREATE MATERIALIZED VIEW public.mv_hazard_event_roads AS
  SELECT row_number() OVER () AS id,
     b.osm_id AS road_id,
     a.hazard_event_id,
-    a.depth_class,
+    a.hazard_class,
     b.district_id,
     b.sub_district_id,
     b.village_id,

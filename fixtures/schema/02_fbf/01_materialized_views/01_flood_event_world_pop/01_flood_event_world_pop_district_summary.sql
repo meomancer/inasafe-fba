@@ -12,8 +12,8 @@ from (
         dc_code,
         sum(pop_sum) as pop_sum
     from mv_hazard_event_world_pop
-        where depth_class > 2
-    group by hazard_event_id, dc_code, depth_class) a
+        where hazard_class > 2
+    group by hazard_event_id, dc_code, hazard_class) a
     join district b on a.dc_code = b.dc_code
 group by hazard_event_id, a.dc_code, b.name)
     select
