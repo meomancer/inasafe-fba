@@ -14,10 +14,10 @@ CREATE TABLE IF NOT EXISTS public.hazard (
 );
 
 --
--- Name: osm_flood_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: osm_hazard_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE IF NOT EXISTS public.osm_flood_id_seq
+CREATE SEQUENCE IF NOT EXISTS public.osm_hazard_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -31,29 +31,29 @@ CREATE SEQUENCE IF NOT EXISTS public.osm_flood_id_seq
 -- Name: hazard id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.hazard ALTER COLUMN id SET DEFAULT nextval('public.osm_flood_id_seq'::regclass);
+ALTER TABLE ONLY public.hazard ALTER COLUMN id SET DEFAULT nextval('public.osm_hazard_id_seq'::regclass);
 
 --
--- Name: osm_flood_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: osm_hazard_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.osm_flood_id_seq OWNED BY public.hazard.id;
+ALTER SEQUENCE public.osm_hazard_id_seq OWNED BY public.hazard.id;
 
--- Name: id_osm_flood_idx; Type: INDEX; Schema: public; Owner: -
+-- Name: id_osm_hazard_idx; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX IF NOT EXISTS id_osm_flood_idx ON public.hazard USING btree (id);
-
-
---
--- Name: id_osm_flood_name; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX IF NOT EXISTS id_osm_flood_name ON public.hazard USING btree (name);
+CREATE INDEX IF NOT EXISTS id_osm_hazard_idx ON public.hazard USING btree (id);
 
 
 --
--- Name: osm_flood_gix; Type: INDEX; Schema: public; Owner: -
+-- Name: id_osm_hazard_name; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX IF NOT EXISTS osm_flood_gix ON public.hazard USING gist (geometry);
+CREATE INDEX IF NOT EXISTS id_osm_hazard_name ON public.hazard USING btree (name);
+
+
+--
+-- Name: osm_hazard_gix; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX IF NOT EXISTS osm_hazard_gix ON public.hazard USING gist (geometry);
