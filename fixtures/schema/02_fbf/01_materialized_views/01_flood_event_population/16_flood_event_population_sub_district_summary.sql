@@ -9,7 +9,7 @@ CREATE MATERIALIZED VIEW public.mv_hazard_event_population_sub_district_summary 
                sum(a.females) as females_population_count,
                sum(a.elderly) as elderly_population_count,
                sum(a.unemployed) as unemployed_population_count
-        from mv_non_hazarded_population_summary a
+        from mv_population_summary a
         where a.district_id is not null and a.sub_district_id is not null and a.village_id is not null
         group by a.district_id, a.sub_district_id
     ), hazarded_count as (

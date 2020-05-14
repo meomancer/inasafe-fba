@@ -2,18 +2,18 @@ create or replace view vw_village_impact
             (hazard_event_id, district_id, sub_district_id, village_id,
              impact_ratio) as
 WITH total_village_count_table AS (
-    SELECT mv_non_hazarded_building_summary.district_id,
-           mv_non_hazarded_building_summary.sub_district_id,
-           mv_non_hazarded_building_summary.village_id,
+    SELECT mv_building_summary.district_id,
+           mv_building_summary.sub_district_id,
+           mv_building_summary.village_id,
            sum(
-                   mv_non_hazarded_building_summary.building_type_count) AS total_building
-    FROM mv_non_hazarded_building_summary
-    WHERE mv_non_hazarded_building_summary.district_id IS NOT NULL
-      AND mv_non_hazarded_building_summary.sub_district_id IS NOT NULL
-      AND mv_non_hazarded_building_summary.village_id IS NOT NULL
-    GROUP BY mv_non_hazarded_building_summary.district_id,
-             mv_non_hazarded_building_summary.sub_district_id,
-             mv_non_hazarded_building_summary.village_id
+                   mv_building_summary.building_type_count) AS total_building
+    FROM mv_building_summary
+    WHERE mv_building_summary.district_id IS NOT NULL
+      AND mv_building_summary.sub_district_id IS NOT NULL
+      AND mv_building_summary.village_id IS NOT NULL
+    GROUP BY mv_building_summary.district_id,
+             mv_building_summary.sub_district_id,
+             mv_building_summary.village_id
 ),
      building_filter AS (
          SELECT mv_hazard_event_buildings.hazard_event_id,
