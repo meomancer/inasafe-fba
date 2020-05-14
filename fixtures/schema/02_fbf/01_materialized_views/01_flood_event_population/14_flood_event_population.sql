@@ -4,7 +4,7 @@ CREATE MATERIALIZED VIEW public.mv_hazard_event_population AS
  WITH intersections AS (
          SELECT a_1.geometry,
             d.id AS hazard_event_id,
-            a_1.depth_class
+            a_1.hazard_class
            FROM (((public.hazard_area a_1
              JOIN public.hazard_areas b_1 ON ((a_1.id = b_1.hazarded_area_id)))
              JOIN public.hazard_map c ON ((c.id = b_1.hazard_map_id)))
@@ -13,7 +13,7 @@ CREATE MATERIALIZED VIEW public.mv_hazard_event_population AS
       admin_boundaries as (
           select
               a.hazard_event_id,
-              max(a.depth_class) as depth_class,
+              max(a.hazard_class) as hazard_class,
               d.district_id,
               d.sub_district_id,
               d.village_id,

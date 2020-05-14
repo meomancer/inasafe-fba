@@ -4,9 +4,9 @@
 
 CREATE TABLE IF NOT EXISTS public.hazard_area (
     id integer NOT NULL,
-    depth_class integer,
+    hazard_class integer,
     geometry public.geometry(MultiPolygon,4326),
-    CONSTRAINT hazarded_area_depth_class_fkey FOREIGN KEY (depth_class) REFERENCES public.hazard_class(id),
+    CONSTRAINT hazarded_area_hazard_class_fkey FOREIGN KEY (hazard_class) REFERENCES public.hazard_class(id),
     CONSTRAINT hazarded_area_pkey PRIMARY KEY (id)
 );
 

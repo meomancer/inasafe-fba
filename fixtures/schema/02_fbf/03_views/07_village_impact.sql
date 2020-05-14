@@ -21,7 +21,7 @@ WITH total_village_count_table AS (
                 mv_hazard_event_buildings.sub_district_id,
                 mv_hazard_event_buildings.village_id,
                 mv_hazard_event_buildings.building_id,
-                max(mv_hazard_event_buildings.depth_class)             AS depth_class,
+                max(mv_hazard_event_buildings.hazard_class)             AS hazard_class,
                 max(
                         mv_hazard_event_buildings.total_vulnerability) AS total_vulnerability
          FROM mv_hazard_event_buildings
@@ -38,11 +38,11 @@ WITH total_village_count_table AS (
          SELECT building_filter.hazard_event_id,
                 building_filter.village_id,
                 CASE
-                    WHEN building_filter.depth_class = 2 AND
+                    WHEN building_filter.hazard_class = 2 AND
                          building_filter.total_vulnerability > 0.6 THEN 1
-                    WHEN building_filter.depth_class = 3 AND
+                    WHEN building_filter.hazard_class = 3 AND
                          building_filter.total_vulnerability > 0.3 THEN 1
-                    WHEN building_filter.depth_class = 4 AND
+                    WHEN building_filter.hazard_class = 4 AND
                          building_filter.total_vulnerability > 0::numeric
                         THEN 1
                     ELSE 0
