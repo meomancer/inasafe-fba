@@ -74,6 +74,7 @@ if __name__ == '__main__':
             'building_vulnerability',
             'exposed_roads',
             'flood_depth_class',
+            'flood_depth_class_geocris',
             'osm_buildings',
             'osm_roads',
             'osm_waterways_scale',

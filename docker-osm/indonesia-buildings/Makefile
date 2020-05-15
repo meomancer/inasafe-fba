@@ -16,6 +16,13 @@ prepare-integration-tests:
 	@echo "------------------------------------------------------------------"
 	@WORKING_DIR=$(PWD); FIXTURES_PATH=$(PWD)/../../fixtures; source $${FIXTURES_PATH}/tests/scripts/integration-tests-prepare.sh
 
+prepare-integration-tests-grenada:
+	@echo
+	@echo "------------------------------------------------------------------"
+	@echo "Do preparations for grenada integration tests"
+	@echo "------------------------------------------------------------------"
+	@WORKING_DIR=$(PWD); FIXTURES_PATH=$(PWD)/../../fixtures; source $${FIXTURES_PATH}/tests/scripts/integration-tests-prepare-grenada.sh
+
 upgrade-plpython-scripts:
 	@docker-compose exec db bash -c 'wget -qO- $${ARCHIVE_BASE_URL}/install-plpython-scripts.sh | bash'
 #	@docker-compose exec db sh -c 'echo "$${ARCHIVE_BASE_URL}/install-plpython-scripts.sh"'

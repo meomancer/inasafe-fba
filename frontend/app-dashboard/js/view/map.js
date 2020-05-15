@@ -10,7 +10,8 @@ define([
     'leafletAwesomeIcon'
 ], function (Backbone, $, Basemap, Layers, SidePanelView, IntroView, DepthClassCollection, LeafletWMSLegend, leafletAwesomeIcon) {
     return Backbone.View.extend({
-        initBounds: [[-21.961179941367273,93.86358289827513],[16.948660219367564,142.12675002072507]],
+        defaultZoom: 11,
+        initBounds: [[12.548531410992766, -61.140293876866174],[ 11.953349393643416, -62.09473113272555]],
         wmsLegendURI: `${geoserverUrl}?${$.param({
             SERVICE: 'WMS',
             REQUEST: 'GetLegendGraphic',
@@ -46,7 +47,7 @@ define([
         reportingPointMarkers: [],
         initialize: function () {
             // constructor
-            this.map = L.map('map').setView([51.505, -0.09], 13).fitBounds(this.initBounds);
+            this.map = L.map('map').fitBounds(this.initBounds);
             this.basemap = new Basemap(this);
             this.layers = new Layers(this);
             this.layer_control = L.control.layers(
@@ -88,7 +89,7 @@ define([
             }
             dispatcher.trigger('map:redraw');
             this.map.fitBounds(this.initBounds);
-            this.map.setZoom(5);
+            this.map.setZoom(this.defaultZoom);
             if(resetView) {
                 dispatcher.trigger('side-panel:open-welcome')
             }
@@ -97,7 +98,7 @@ define([
         showMap: function() {
             $(this.map._container).show();
             this.map._onResize();
-            this.map.setZoom(5);
+            this.map.setZoom(this.defaultZoom);
         },
         hideMap: function () {
             dispatcher.trigger('flood:deselect-forecast');
@@ -282,7 +283,7 @@ define([
             }
             this.redraw();
             that.map.fitBounds(this.initBounds);
-            this.map.setZoom(5);
+            this.map.setZoom(this.defaultZoom);
             dispatcher.trigger('dashboard:reset')
         },
         fitBounds: function (bounds) {

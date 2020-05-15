@@ -48,7 +48,7 @@ if __name__ == '__main__':
             },
             {
                 'layer_name': 'flood_forecast_layer',
-                'style_name': 'flood_depth_class'
+                'style_name': 'flood_depth_class_geocris'
             },
             {
                 'layer_name': 'osm_buildings',
