@@ -29,3 +29,9 @@ LANGUAGES = (
 
 # Set storage path for the translation files
 LOCALE_PATHS = (ABS_PATH('locale'),)
+
+INSTALLED_APPS += (
+    'mapserver',
+)
+
+MAPSERVER_PUBLIC_WMS_URL = os.environ.get('MAPSERVER_PUBLIC_WMS_URL', None)
