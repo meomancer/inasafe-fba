@@ -11,4 +11,4 @@ class Command(BaseCommand):
     """ Command to process first hazard event queue. """
 
     def handle(self, *args, **options):
-        HazardEventQueue.objects.update(queue_status=0)
+        HazardEventQueue.objects.all().update(queue_status=0)
