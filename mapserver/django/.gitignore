@@ -2,3 +2,4 @@ django_project/core/settings/secret.py
 logs
 media
 static
+celerybeat-schedule.db
