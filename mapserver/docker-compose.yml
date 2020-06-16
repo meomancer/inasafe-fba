@@ -23,12 +23,14 @@ services:
       - POSTGRES_PASS=${POSTGRES_PASS}
       - POSTGRES_HOST=${POSTGRES_HOST}
       - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGREST_BASE_URL=${POSTGREST_BASE_URL}
     volumes:
       - ./fixtures:/home/web/fixtures
       - ./django/django_project:/home/web/django_project
       - ./django/volumes/static:/home/web/static
       - ./django/volumes/media:/home/web/media
       - ./django/volumes/logs:/var/log/
+      - ./django/volumes/data:/home/web/data
     links:
       - mapserver:mapserver
       - rabbitmq:rabbitmq
@@ -45,6 +47,7 @@ services:
       - MAPSERVER_PUBLIC_WMS_URL=${MAPSERVER_PUBLIC_WMS_URL}
       - MAPSERVER_PUBLIC_OWS_URL=${MAPSERVER_PUBLIC_OWS_URL}
       - MAPSERVER_PUBLIC_SLD_URL=${MAPSERVER_PUBLIC_SLD_URL}
+      - POSTGREST_BASE_URL=${POSTGREST_BASE_URL}
 
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
@@ -57,6 +60,7 @@ services:
       - ./django/volumes/static:/home/web/static
       - ./django/volumes/media:/home/web/media
       - ./django/volumes/logs:/var/log/
+      - ./django/volumes/data:/home/web/data
     links:
       - mapserver:mapserver
       - rabbitmq:rabbitmq
@@ -72,6 +76,7 @@ services:
       # I dont use volumes_from as I want to use the ro modifier
       - ./django/volumes/static:/home/web/static:ro
       - ./django/volumes/media:/home/web/media:ro
+      - ./django/volumes/data:/home/web/data:ro
       - ./django/volumes/logs:/var/log/nginxs
     links:
       - django-uwsgi:uwsgi

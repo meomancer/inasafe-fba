@@ -38,6 +38,8 @@ INSTALLED_APPS += (
 MAPSERVER_PUBLIC_WMS_URL = os.environ.get('MAPSERVER_PUBLIC_WMS_URL', None)
 MAPSERVER_PUBLIC_OWS_URL = os.environ.get('MAPSERVER_PUBLIC_OWS_URL', None)
 MAPSERVER_PUBLIC_SLD_URL = os.environ.get('MAPSERVER_PUBLIC_SLD_URL', None)
+POSTGREST_BASE_URL = os.environ.get('POSTGREST_BASE_URL', None)
 FIXTURES = '/home/web/fixtures'
 
 DATABASE_ROUTERS = ['core.settings.router.CustomRouter']
+ANALYSIS_REPORT_FOLDER = '/home/web/data/analysis_report'

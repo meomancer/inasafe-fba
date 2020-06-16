@@ -38,3 +38,6 @@ django-collectstatic:
 
 django-create-superuser:
 	@docker-compose exec django-uwsgi python manage.py createsuperuser
+
+analyze-impact-test:
+	@docker-compose exec worker python manage.py test mapserver.tests.analyze_impact --settings=core.settings.test_mapserver --keepdb
